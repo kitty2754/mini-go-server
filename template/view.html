@@ -1,9 +1,172 @@
-<style>
-body {
-  background-color: teal;
-}
-</style>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{{.Title}} - Wiki</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
 
-<h1>{{.Title}}</h1>
-<p>[<a href="/edit/{{.Title}}">edit</a>]</p>
-<div>{{printf "%s" .Body}}</div>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #0f766e 0%, #14b8a6 100%);
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: flex-start;
+            padding: 20px;
+            padding-top: 40px;
+        }
+
+        .container {
+            background: white;
+            border-radius: 12px;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+            max-width: 900px;
+            width: 100%;
+            padding: 40px;
+            animation: slideIn 0.5s ease;
+        }
+
+        @keyframes slideIn {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 30px;
+            padding-bottom: 20px;
+            border-bottom: 3px solid #14b8a6;
+            flex-wrap: wrap;
+            gap: 15px;
+        }
+
+        h1 {
+            color: #0f766e;
+            font-size: 2.5em;
+            flex: 1;
+            min-width: 200px;
+        }
+
+        .action-buttons {
+            display: flex;
+            gap: 10px;
+        }
+
+        .btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            padding: 10px 20px;
+            background: linear-gradient(135deg, #0f766e 0%, #14b8a6 100%);
+            color: white;
+            text-decoration: none;
+            border-radius: 8px;
+            font-weight: 600;
+            font-size: 0.95em;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 15px rgba(20, 184, 166, 0.3);
+            border: none;
+            cursor: pointer;
+        }
+
+        .btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(20, 184, 166, 0.4);
+        }
+
+        .btn:active {
+            transform: translateY(0);
+        }
+
+        .content {
+            line-height: 1.8;
+            color: #334155;
+            font-size: 1.05em;
+            margin-bottom: 30px;
+            padding: 20px;
+            background: #f8fafc;
+            border-left: 4px solid #14b8a6;
+            border-radius: 4px;
+        }
+
+        .content p {
+            margin-bottom: 15px;
+        }
+
+        .content:empty::before {
+            content: "No content yet. Click 'Edit' to get started!";
+            color: #94a3b8;
+            font-style: italic;
+        }
+
+        .metadata {
+            display: flex;
+            gap: 20px;
+            padding-top: 20px;
+            border-top: 1px solid #e2e8f0;
+            color: #64748b;
+            font-size: 0.9em;
+        }
+
+        @media (max-width: 768px) {
+            .container {
+                padding: 20px;
+            }
+
+            h1 {
+                font-size: 1.8em;
+            }
+
+            .header {
+                flex-direction: column;
+                align-items: flex-start;
+            }
+
+            .action-buttons {
+                width: 100%;
+                flex-direction: column;
+            }
+
+            .btn {
+                width: 100%;
+                justify-content: center;
+            }
+
+            .content {
+                padding: 15px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>📖 {{.Title}}</h1>
+            <div class="action-buttons">
+                <a href="/edit/{{.Title}}" class="btn">✏️ Edit</a>
+            </div>
+        </div>
+        <div class="content">
+            {{printf "%s" .Body}}
+        </div>
+        <div class="metadata">
+            <span>📄 Wiki Page</span>
+            <span>🔗 <a href="/view/{{.Title}}" style="color: #14b8a6; text-decoration: none;">Permalink</a></span>
+        </div>
+    </div>
+</body>
+</html>
